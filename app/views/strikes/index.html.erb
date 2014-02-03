@@ -1,0 +1,14 @@
+<% provide(:title, 'strikes') %>
+
+<h1>all strikes</h1>
+
+<table class="table table-responsive table-striped table-curved table-hover">
+  
+  <% @strikes.each do |strike| %>
+    <tr>
+      <td class="col-sm-1"><%= strike._id %></td>
+      <td class="col-md-4"><%= link_to(truncate(strike.bij_summary_short), strike) %></td>
+      <td class="col-md-5"><%= strike.country %></td>
+    </tr>
+  <% end %>
+</table>
