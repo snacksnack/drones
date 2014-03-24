@@ -4,12 +4,20 @@ source 'http://gemcutter.org'
 
 gem 'rails', '3.2.14'
 gem 'thin'
-gem 'mongoid'
-gem 'mongo_mapper'
-
-gem 'bootstrap-sass'
+gem 'mongoid', '~> 3.1.6'
+gem 'mongoid3_metastamp', :git => "git://github.com/nvdk/mongoid3-metastamp.git"
+gem 'rickshaw_rails'
+gem "highcharts-rails", "~> 3.0.0"
+gem 'lazy_high_charts'
+#gem 'mongoid-metastamp'
+#gem 'mongoid-mapreduce'
+gem 'gmaps4rails'
+gem 'underscore-rails'
 gem 'jquery-rails'
+gem 'bootstrap-sass'
 gem 'font-awesome-sass'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'figaro'
 gem 'httparty'
 

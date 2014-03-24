@@ -2,14 +2,15 @@
 
 $grayLight: #eaeaea;
 
+body {
+  padding-top: 60px;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";
+}
+
 html {
   overflow-y: scroll;
 }
 
-body {
-  padding-top: 60px;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
 
 .center {
   text-align: center;
@@ -18,10 +19,25 @@ body {
   }
 }
 
+#chart {
+  width: 600px;
+  height: 270px;
+  border: solid;
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 100px;
+}
+
 .container-fluid {
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
-  //background-color: #66ffff;
+}
+
+.strikes-form {
+  input {
+    height: 34px;
+    border-radius: 0px;
+  }
 }
 
 h1 {
@@ -45,10 +61,62 @@ p {
   line-height: 1.7em;
 }
 
-ul {
+ul#strikes-header {
   list-style: none;
+  padding-left: 0px;
+  text-align: center;
+  font-weight: bold;
+    li {
+      display: inline-block;
+      width: 50px;  
+    }
   }
 
 table {
   width: 50%;
 }
+
+.modal {
+  width: 500px;
+  height: 500px;
+  top: 30%;
+  left: 50%;
+  margin-top: -25px;
+  margin-left: -200px;
+  padding: 20px;
+}
+
+// asc and descending sort on table
+
+th {
+  position: relative;
+}
+
+th .current {
+  position: relative;
+  content: "\f0aa"
+}
+
+th .asc {
+  position: relative;
+  content: "\f0ab"
+}
+
+th .desc {
+
+}
+
+
+
+/* .pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.pretty th .asc { 
+  background-image: url(/images/up_arrow.gif); 
+}
+
+.pretty th .desc { 
+  background-image: url(/images/down_arrow.gif); 
+} */

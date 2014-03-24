@@ -1,0 +1,19 @@
+<%= hidden_field_tag :direction, params[:direction] %>
+<%= hidden_field_tag :sort, params[:sort] %>
+<table class="table table-responsive table-striped table-curved table-hover">
+  <tr>
+    <th>Headline</th>
+    <th><%= sortable "date" %></th>
+    <th><%= sortable "country" %></th>
+    <th><%= sortable "deaths_max", "Deaths" %></th>
+  </tr>
+
+  <% @strikes.each do |strike| %> 
+  <tr>
+    <td class="col-md-7"><%= link_to truncate(strike.bij_summary_short, length: 65), strike, remote: true %></td>
+    <td class="col-md-3"><%= strike.date.strftime('%B %d, %Y') %></td>
+    <td class="col-md-2"><%= strike.country %></td>
+    <td class="col-md-3"><%= strike.deaths_max %></td>
+  </tr>
+  <% end %>
+</table>

@@ -14,17 +14,18 @@ module DroneStrikes
     logger = Logger.new(Rails.root.join('log',"drone_pull_#{current}.log"))
     logger.formatter = Logger::Formatter.new
 
-    db = MongoMapper.database
-    collection = db.collection("drones") ||
-      logger.fatal("cound not connect to drones collection")
-
     strikes = response['strike']
     strikes.each do |strike|
       begin 
-      #collection.insert(strike)
+
+      #day, time = strike['date'].split('T')
+      #strike['date'] = {d: day, t: time}
+      year = strike['date'].split('-')[0]
+      strike['year'] = "#{year}-01-01T00:00:000Z"
       Strike.create(strike)
-      rescue Mongo::OperationFailure => e
-        if e.message =~ /^1100/
+
+      rescue Mongoid::Errors::Validations => e
+        if e.message =~ /blank/
           logger.warn("#{$!}")
         else
           raise e

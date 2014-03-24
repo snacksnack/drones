@@ -1,0 +1,7 @@
+$("#strikes").fadeOut(750,function(){ $(this).html('<%= escape_javascript(render("strikes")) %>').fadeIn(750); });
+$('.pagination a').attr('data-remote', 'true');
+
+$('#strikes-search').submit(function () {
+	$.get(this.action, $(this).serialize(), null, 'script');
+  return false;
+});
