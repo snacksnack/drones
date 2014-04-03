@@ -36,44 +36,83 @@ class Strike
   #  where(:date.gte => date.at_beginning_of_year, :date.lte => date.at_end_of_year).sum(:deaths_max)
   #end
 
+  
+  def self.chartify(data=[])
+    #build and array of hashes with x,y coordinates for rickshaw
+    rickshaw_arr = []
+    hash = {}
+    data.each.with_index do |e,i|
+      hash[:x] = i
+      hash[:y] = e['total_strikes']
+      rickshaw_arr.push(hash)
+    end
+    rickshaw_arr
+  end
+
   def self.distinct_countries
     all.distinct(:country)
   end
 
-  def self.strikes_years
-    chart_strikes = []
-    data = collection.aggregate([
-      {"$group" => {_id: "$year", total_strikes: {"$sum" => 1}}}
-    ]).each do |x|
-      hash = {}
-      hash[:x] = x['_id'].split('-')[0]
-      hash[:y] = x['total_strikes']
-      chart_strikes.push(hash)
+  def self.year_range
+    years = all.distinct(:year)
+    years.map! do |x|
+      x.split('-')[0].to_i
     end
-    return chart_strikes
+
+    range = (years[0]..years[-1]).to_a
+    range.map do |r|
+      r = Time.gm("#{r}-01-01T00:00:000Z").to_i
+    end
   end
 
-  def self.strikes_countries
-    chart_strikes = []
-    collection.aggregate([
-      {"$group" => {_id: "$country", total_strikes: {"$sum" => 1}}}
-    ]).each do |x|
-      hash = {}
-      hash[:x] = x['_id']
-      hash[:y] = x['total_strikes']
-      chart_strikes.push(hash)
+  def self.strikes_per_year(country)
+
+    yearly_strikes = collection.aggregate([
+      {"$match" => {country: country}},
+      {"$group" => {_id: "$year", total_strikes: {"$sum" => 1}}}
+    ])
+
+    yearly_strikes.sort_by! { |hash| hash['_id'] }
+
+    all_years = year_range
+    country_years = []
+
+    rs_array = []
+    
+    yearly_strikes.each.with_index do |year, i|
+      rs_hash = {}
+      country_years.push(Time.gm(year['_id']).to_i)
+      rs_hash[:x] = Time.gm(year['_id']).to_i
+      rs_hash[:y] = year['total_strikes']
+      rs_array.push(rs_hash)
     end
-    return chart_strikes
+
+    missing_years = all_years - country_years
+    missing_years.each do |epoch|
+      rs_hash = {}
+      rs_hash[:x] = epoch
+      rs_hash[:y] = 0
+      rs_array.push(rs_hash)
+    end
+    rs_array.sort_by! { |hash| hash[:x] }
+  end
+
+  def self.all_strikes_countries
+    country_strikes = collection.aggregate([
+                        {"$group" => {_id: "$country", total_strikes: {"$sum" => 1}}}
+                      ])
+  end
+
+  
+
+  def self.strikes_countries_years
+    collection.aggregate("$group" => { "_id" => {"year" => "$year", "country" => "$country"}, count: {"$sum" =>  1} })
   end
 
   def self.column_names
     self.fields.collect { |field| field[0] }
   end
 
-
-#any_of(:year => /#{Regexp.escape(search)}/i)
-#elsif
-#any_of({:country => /#{Regexp.escape(search)}/i}, {:bij_summary_short => /#{Regexp.escape(search)}/i})
   def self.search(search)
     if (search)
       any_of({:year => /#{Regexp.escape(search)}/i}, {:country => /#{Regexp.escape(search)}/i}, {:bij_summary_short => /#{Regexp.escape(search)}/i})

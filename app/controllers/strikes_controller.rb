@@ -4,11 +4,11 @@ class StrikesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    #raise params[:year].inspect
+    #raise params.inspect
     #if params[:year] =! nil
     #  @strikes = Strike.search(params[:year]).order_by(sort_column + ' ' + sort_direction).paginate(:per_page => 10, :page => params[:page])
     #else  
-    #  @strikes = Strike.search(params[:search]).order_by(sort_column + ' ' + sort_direction).paginate(:per_page => 10, :page => params[:page])
+    #  
     #end
     @strikes = Strike.search(params[:search]).order_by(sort_column + ' ' + sort_direction).paginate(:per_page => 10, :page => params[:page])
     respond_to do |format|
