@@ -7,6 +7,7 @@ ruby "2.0.0"
 gem 'rails', '3.2.14'
 #gem "rake", "!= 0.9.0"
 gem 'heroku'
+gem 'rails_12factor'
 gem 'thin'
 gem 'mongoid', '~> 3.1.6'
 gem 'mongoid3_metastamp', :git => "git://github.com/nvdk/mongoid3-metastamp.git"
