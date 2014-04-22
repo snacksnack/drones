@@ -1,8 +1,9 @@
 require 'rubygems'
 require 'mongo'
-#source 'http://gemcutter.org'
+source 'http://gemcutter.org'
 
 gem 'rails', '3.2.14'
+gem "rake", "!= 0.9.0"
 gem 'heroku'
 gem 'thin'
 gem 'mongoid', '~> 3.1.6'
@@ -32,7 +33,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => false
   gem 'rb-fsevent', :require => false
   gem 'growl', '1.0.3'
   gem 'database_cleaner'
