@@ -67,7 +67,7 @@ module Drones
     # Enable the asset pipeline
     config.assets.enabled = true
 
-    #config.assets.precompile += ['rickshaw_custom.css']
+    config.assets.precompile += ['rickshaw_custom.css']
     #config.assets.precompile = %w( *.js *.css )
 
     # Heroku requires this to be false
