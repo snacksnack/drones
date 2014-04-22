@@ -15,7 +15,7 @@ GIT
       mongoid (>= 3.0.0)
 
 GEM
-  remote: http://gemcutter.org/
+  remote: https://rubygems.org/
   specs:
     actionmailer (3.2.14)
       actionpack (= 3.2.14)
@@ -285,7 +285,6 @@ DEPENDENCIES
   mongoid-rspec
   mongoid3_metastamp!
   rails (= 3.2.14)
-  rake (!= 0.9.0)
   rb-fsevent
   rickshaw_rails
   rspec-rails (= 2.11.0)

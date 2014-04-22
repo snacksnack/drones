@@ -1,9 +1,11 @@
-require 'rubygems'
-require 'mongo'
-source 'http://gemcutter.org'
+source 'https://rubygems.org'
+ruby "2.0.0"
+
+#require 'rubygems'
+#require 'mongo'
 
 gem 'rails', '3.2.14'
-gem "rake", "!= 0.9.0"
+#gem "rake", "!= 0.9.0"
 gem 'heroku'
 gem 'thin'
 gem 'mongoid', '~> 3.1.6'
