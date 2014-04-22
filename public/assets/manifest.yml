@@ -3,6 +3,10 @@ strike_search.png: strike_search-fff486c39231751c391c8ee9f0c95ded.png
 strike_search/index.png: strike_search-fff486c39231751c391c8ee9f0c95ded.png
 application.js: application-32f3036413bbe1b70f46dd59fbe72368.js
 application/index.js: application-32f3036413bbe1b70f46dd59fbe72368.js
+top/death_strikes.js: top/death_strikes-7b4cbd63f8e6921e05d07380dc14a0e0.js
+top/death_strikes/index.js: top/death_strikes-7b4cbd63f8e6921e05d07380dc14a0e0.js
+top/yearly_strikes.js: top/yearly_strikes-60990455c5751e19159c9b21bc44f079.js
+top/yearly_strikes/index.js: top/yearly_strikes-60990455c5751e19159c9b21bc44f079.js
 application.css: application-1661a770a87b5a22b620e276e57def20.css
 application/index.css: application-1661a770a87b5a22b620e276e57def20.css
 rickshaw_custom.css: rickshaw_custom-0b8474101633fc6365b442be8244c308.css
