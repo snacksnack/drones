@@ -1,0 +1,63 @@
+@import "bootstrap";
+
+#spy_chart_container {
+  position: relative;
+  display: inline-block;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";
+
+  #spy_chart {
+    display: inline-block;
+    margin-left: 40px;
+  }
+
+  #spy_y_axis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+  }
+}
+
+#spy_legend {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0 0 10px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+
+#death_chart_container {
+  position: relative;
+  display: inline-block;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";
+
+  #death_chart {
+    display: inline-block;
+    margin-left: 40px;
+  }
+
+  #death_y_axis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+  }
+}
+
+#death_legend {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0 0 10px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+
+
+
+
+
+
+
+

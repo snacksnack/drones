@@ -5,9 +5,6 @@ class Strike
 
   validates_presence_of :lat, :lon, :date, :bij_summary_short
 
-  #include Gmaps4rails::ActsAsGmappable
-  #acts_as_gmappable
-
   field :number, type: String
   field :country, type: String
   field :date, type: Time
@@ -29,13 +26,6 @@ class Strike
   field :articles, type: Array
   field :names, type: Array
   field :year, type: String
-
-
-
-  #def self.yearly_deaths(date)
-  #  where(:date.gte => date.at_beginning_of_year, :date.lte => date.at_end_of_year).sum(:deaths_max)
-  #end
-
   
   def self.chartify(data=[])
     #build and array of hashes with x,y coordinates for rickshaw
@@ -72,42 +62,87 @@ class Strike
       {"$group" => {_id: "$year", total_strikes: {"$sum" => 1}}}
     ])
 
-    yearly_strikes.sort_by! { |hash| hash['_id'] }
 
-    all_years = year_range
-    country_years = []
+    unless yearly_strikes.empty?
+      yearly_strikes.sort_by! { |hash| hash['_id'] }
 
-    rs_array = []
-    
-    yearly_strikes.each.with_index do |year, i|
-      rs_hash = {}
-      country_years.push(Time.gm(year['_id']).to_i)
-      rs_hash[:x] = Time.gm(year['_id']).to_i
-      rs_hash[:y] = year['total_strikes']
-      rs_array.push(rs_hash)
+      all_years = year_range
+      country_years = []
+
+      rs_array = []
+      
+      yearly_strikes.each.with_index do |year, i|
+        rs_hash = {}
+        country_years.push(Time.gm(year['_id']).to_i)
+        rs_hash[:x] = Time.gm(year['_id']).to_i
+        rs_hash[:y] = year['total_strikes']
+        rs_array.push(rs_hash)
+      end
+
+      missing_years = all_years - country_years
+      missing_years.each do |epoch|
+        rs_hash = {}
+        rs_hash[:x] = epoch
+        rs_hash[:y] = 0
+        rs_array.push(rs_hash)
+      end
+      rs_array.sort_by! { |hash| hash[:x] }
     end
-
-    missing_years = all_years - country_years
-    missing_years.each do |epoch|
-      rs_hash = {}
-      rs_hash[:x] = epoch
-      rs_hash[:y] = 0
-      rs_array.push(rs_hash)
-    end
-    rs_array.sort_by! { |hash| hash[:x] }
   end
 
   def self.all_strikes_countries
     country_strikes = collection.aggregate([
-                        {"$group" => {_id: "$country", total_strikes: {"$sum" => 1}}}
-                      ])
+      {"$group" => {_id: "$country", total_strikes: {"$sum" => 1}}}
+    ])
+
+    chartkick_hash = {}
+    country_strikes.each do |strikes|
+      chartkick_hash[strikes['_id']] = strikes['total_strikes']
+    end
+    chartkick_hash
+  end
+
+  def self.deaths_per_year(type)
+    total_deaths = []
+    if type == "deaths"
+      total_deaths = collection.aggregate([
+        {"$match" => {deaths: {"$ne" => nil}}},
+        {"$group" => {_id: "$year", count: {"$sum" => 1}}} 
+      ])
+    elsif type == "civilians"
+      total_deaths = collection.aggregate([
+        {"$match" => {civilians: {"$ne" => nil}}},
+        {"$group" => {_id: "$year", count: {"$sum" => 1}}}
+        ])
+    end
+
+    unless total_deaths.empty?
+      total_deaths.sort_by! { |hash| hash['_id'] }
+      all_years = year_range
+      death_years = []
+      rs_array = []
+
+
+      total_deaths.each_with_index do |year, i|
+        rs_hash = {}
+        death_years.push(Time.gm(year['_id']).to_i)
+        rs_hash[:x] = Time.gm(year['_id']).to_i
+        rs_hash[:y] = year['count']
+        rs_array.push(rs_hash)
+      end
+
+      missing_years = all_years - death_years
+      missing_years.each do |epoch|
+        rs_hash = {}
+        rs_hash[:x] = epoch
+        rs_hash[:y] = 0
+        rs_array.push(rs_hash)
+      end
+      rs_array.sort_by! { |hash| hash[:x] }
+    end
   end
 
   
-
-  def self.strikes_countries_years
-    collection.aggregate("$group" => { "_id" => {"year" => "$year", "country" => "$country"}, count: {"$sum" =>  1} })
-  end
 
   def self.column_names
     self.fields.collect { |field| field[0] }

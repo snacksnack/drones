@@ -3,7 +3,7 @@
 $grayLight: #eaeaea;
 
 body {
-  padding-top: 60px;
+  padding-top: 20px;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue";
 }
 
@@ -11,42 +11,176 @@ html {
   overflow-y: scroll;
 }
 
+.mapbox-override {
+   #map {
+    position: relative;
+    width: 100%;
+  }
+  .leaflet-popup-content-wrapper {
+    background-color: rgb(100,158,185);
+    color: white;
+    font-weight: 200;
+    border-radius: 10px;
+    .leaflet-popup-content {
+      .popup {
+        margin-top: 2px;
+        ul {
+          list-style: none;
+          padding-left: 0;
+          font-size: 16px;
+          font-weight: 200;
+          hr {
+            line-height: 1px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.container-fluid {
+  width: 65%;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  a {
+    color: black;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
 
 .center {
   text-align: center;
   h1 {
     margin-bottom: 10px;
+    a {
+      color: green;
+    }
   }
 }
 
 
 
-.container-fluid {
-  width: 60%;
-  margin: 0 auto;
+.intro {
+  width: 550px;
+  border-radius: 10px;
+  padding-bottom: 20px;
+  h1 {
+    font-weight: 600;
+    font-size: 55px;
+    margin-top: 40px;
+    letter-spacing: 1px;
+  }
+  h2 {
+    font-weight: 200;
+    font-size: 26px;
+    margin-top: 20px;
+    line-height: 40px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 20px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    width: 180px;
+    padding: 15px;
+  }
+  #btn_data {
+    background-color: rgb(56,122,163);
+    &:hover { 
+      background-color: #B0C4DE;
+      color: #fff;
+    }
+  }
+  #btn_search {
+    background-color: rgb(100,158,185);
+    &:hover { 
+      background-color: #B0C4DE;
+      color: #fff;
+    }
+  }
+}
+
+.quick_stats {
+  margin-top: 40px;
+  width: 300px;
+  border-left: 150px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(100,158,185);
+  font-weight: 200;
+  color: white;
+  line-height: 20px;
+  .fact_header {
+    font-weight: bold;
+    text-align: center;
+  }
+  .fact_label {
+    width: 150px;
+    display: inline-block;
+  }
+}
+
+.data_search {
+  #strikes_image {
+    width: 500px;
+    height: 240px;
+    display: inline-block;
+  }
+  .dataset_description {
+    width: 400px;
+    padding-left: 10px;
+  }
+}
+
+.trends, .trend_description,
+.dataset_description {
+  h1 {
+    font-weight: 200;
+    font-size: 24px;
+  }
+  h2 {
+    font-weight: 200;
+    font-size: 18px;
+  }
+  h6 {
+    font-weight: 200;
+    font-size: 10px;
+  }
+}
+
+
+.pie {
+  display: inline-block;
+  #chart-1 {
+    display: inline-block;
+    top: 0px;
+    border: solid black;
+    width: 500px;
+    margin-top: 0px;
+    padding: 0px;
+    text-align: left;
+  }
+  .trend_description {
+    display: inline-block;
+    width: 250px;
+    border: solid black;
+  }
 }
 
 .strikes-form {
   input {
     height: 34px;
-    border-radius: 0px;
+    border-radius: 10px;
   }
-}
-
-h1 {
-  font-size: 3em;
-  letter-spacing: -2px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 1.7em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: normal;
-  color: $grayLight;
 }
 
 p {
@@ -70,13 +204,22 @@ table {
 }
 
 .modal {
-  width: 500px;
+  width: 50%;
   height: 500px;
   top: 30%;
   left: 50%;
-  margin-top: -25px;
-  margin-left: -200px;
+  margin-top: 150px;
+  margin-left: 350px;
   padding: 20px;
+}
+
+#map {
+  top:0;
+  bottom:0;
+  left: 0;
+  height: 600px;
+  width:700px;
+  border-radius: 10px;
 }
 
 // asc and descending sort on table

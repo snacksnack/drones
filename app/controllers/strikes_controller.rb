@@ -4,12 +4,6 @@ class StrikesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   def index
-    #raise params.inspect
-    #if params[:year] =! nil
-    #  @strikes = Strike.search(params[:year]).order_by(sort_column + ' ' + sort_direction).paginate(:per_page => 10, :page => params[:page])
-    #else  
-    #  
-    #end
     @strikes = Strike.search(params[:search]).order_by(sort_column + ' ' + sort_direction).paginate(:per_page => 10, :page => params[:page])
     respond_to do |format|
       format.html
@@ -17,26 +11,12 @@ class StrikesController < ApplicationController
       format.js
     end
 
-    #dates = [10,11,12,13,14,15,16]
-    #@graph = LazyHighCharts::HighChart.new('graph') do |f|
-    #  f.xAxis(:categories => dates)
-    #  f.series(:type => 'spline', :name => 'Average', :data => [1,2,3,4,5,6,7], :color => '#b20838', marker: {enabled: false})
-    #  f.legend({:align => 'right', :y => 10, :verticalAlign => 'top', :floating => "true", :borderWidth => 0})
-    #end
-
-    #@bar = LazyHighCharts::HighChart.new('column') do |f|
-    #  f.series(:name=>'John',:data=> [3, 20, 3, 5, 4, 10, 12 ])
-    #  f.series(:name=>'Jane',:data=>[1, 3, 4, 3, 3, 5, 4,-46])     
-    #  f.title({ :text=>"example test title from controller"})
-
-      ###  Options for Bar
-      ### f.options[:chart][:defaultSeriesType] = "bar"
-      ### f.plot_options({:series=>{:stacking=>"normal"}}) 
-
-      ## or options for column
-    #  f.options[:chart][:defaultSeriesType] = "column"
-    #  f.plot_options({:column=>{:stacking=>"percent"}})
-    #end
+    @pakistan = Strike.strikes_per_year("Pakistan")
+    @yemen = Strike.strikes_per_year("Yemen")
+    @somalia = Strike.strikes_per_year("Somalia")
+    @countries = Strike.all_strikes_countries
+    @yearly_militant_deaths = Strike.deaths_per_year("deaths")
+    @yearly_civilian_deaths = Strike.deaths_per_year("civilians")
   end
 
   def show
@@ -49,9 +29,48 @@ class StrikesController < ApplicationController
     end
   end
 
+  def locations
+    puts "hello hello"
+    @all_strikes = Strike.all.to_a
+    @geojson = []
+
+    @all_strikes.each do |strike|
+      @geojson.push(
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [strike.lon, strike.lat]
+          },
+          properties: {
+            town: strike.town,
+            country: strike.country,
+            date: strike.date.strftime('%B %d, %Y'),
+            deaths: strike.deaths_max,
+            injuries: strike.injuries,
+            summary: strike.bij_summary_short,
+
+            :'marker-color' => '#00607d',
+            :'marker-symbol' => 'circle',
+            :'marker-size' => 'medium'
+          }
+        }
+      )
+    end
+    respond_to do |format|
+      format.html
+      format.json { render json: @geojson }
+    end
+    @geojson
+  end
+
+
   private
   #a few methods for sorting by date/country/deaths,
   #locking down parameter name/value pairs.
+
+
+
   def sort_column
     Strike.column_names.include?(params[:sort]) ? params[:sort] : "date"
       #raise params.inspect

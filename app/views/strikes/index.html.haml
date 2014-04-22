@@ -1,0 +1,39 @@
+- content_for :title do
+  DroneStrike - All strikes
+
+.header
+  %h1
+    = link_to "drone", root_path
+    %i.fa.fa-bolt
+    = link_to "strikes", root_path
+
+.mapbox-override
+  #map
+
+= render "layouts/modal"
+
+.center
+  = will_paginate
+
+%ul#strikes-header
+  %li= link_to '2014', strikes_path(:search => '2014'), :remote => true
+  %li= link_to '2013', strikes_path(:search => '2013'), :remote => true
+  %li= link_to '2012', strikes_path(:search => '2012'), :remote => true
+  %li= link_to '2011', strikes_path(:search => '2011'), :remote => true
+  %li= link_to '2010', strikes_path(:search => '2010'), :remote => true
+  %li= link_to '2009', strikes_path(:search => '2009'), :remote => true
+  %li= link_to '2008', strikes_path(:search => '2008'), :remote => true
+= form_tag strikes_path, :id => 'strikes-search', :class => 'strikes-form', method: 'get' do
+  %p
+    = text_field_tag :search, params[:search], class: 'col-md-11'
+    = submit_tag "search", name: nil, class: 'btn btn-primary'
+  #strikes
+    = render 'strikes'
+.center
+  = will_paginate @strikes
+
+
+:javascript
+  $(function(){
+    $('.pagination a').attr('data-remote', 'true')
+  });

@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Drones</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <!--<title>Drones</title> -->
+  <title><%= yield(:title) %></title>
+  <%= stylesheet_link_tag  "application", :media => "all" %>
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+  <%= javascript_include_tag "https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js" %>
+  <%= stylesheet_link_tag "http://api.tiles.mapbox.com/mapbox.js/v1.0.2/mapbox.css" %>
+  <%= javascript_include_tag "application" %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<div class="container-fluid">
-<%= yield %>
-<%= yield :scripts %>
-</div>
-
+  <div class="container-fluid">
+    <%= yield %>
+    <%= yield :scripts %>
+  </div>
 <%= javascript_include_tag "application" %>
 </body>
 </html>

@@ -22,3 +22,5 @@ capybara-*.html
 .rspec
 
 /config/application.yml
+
+bundler_stubs/

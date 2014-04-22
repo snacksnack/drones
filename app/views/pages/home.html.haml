@@ -1,0 +1,114 @@
+- content_for :title do
+  DroneStrike - Visualizing drone data
+
+- content_for :stylesheets do
+  = stylesheet_link_tag "rickshaw_custom", :media => "all"
+
+#pakistan_per_year{ data: { pakistan: @pakistan.to_json } }
+#yemen_per_year{ data: { yemen: @yemen.to_json } }
+#somalia_per_year{ data: { somalia: @somalia.to_json } }
+#strikes_countries{ data: { countries: @countries.to_json } }
+#all_deaths{ data: { all_deaths: @yearly_militant_deaths.to_json } }
+#civilian_deaths{ data: { civilian_deaths: @yearly_civilian_deaths.to_json } }
+
+.row
+  .intro.pull-left
+    %h1
+      drone
+      %i{:class => "fa fa-bolt"}
+      strikes
+    %h2
+      Searchable historical and nightly data of each reported US drone strike.
+
+
+    //= link_to "JSON Data", 'http://api.dronestre.am/data', class: 'label'
+     
+    %a{:class => 'btn', :id => 'btn_data', :href => 'http://api.dronestre.am/data'}
+      Raw Data
+    %a{:class => 'btn', :id => 'btn_search', :href => strikes_path}
+      Search    
+
+  .quick_stats.pull-right
+    .fact_header
+      AGGREGATE STRIKE DATA
+    %br
+    .fact_label
+      MILITANT DEATHS
+    .pull-right
+      #{@militant_deaths}
+    .fact_label
+      CIVILIAN DEATHS
+    .pull-right
+      #{@civilian_deaths}
+    .fact_label
+      CHILD DEATHS
+    .pull-right
+      #{@child_deaths}
+    .fact_label
+      INJURIES
+    .pull-right
+      #{@casualties}
+
+%hr
+.row
+  .data_search
+    =link_to(image_tag('strike_search.png', :id => 'strikes_image'), strikes_path)
+    .dataset_description.pull-right
+      %h1
+        A searchable dataset...
+      %h2
+        Strikes can be sorted by country, date, and year to better identify trends. Researchers can also search via key words.      
+      %h6
+        Data sources:
+        %br
+        %a{href: "http://www.thebureauinvestigates.com"}
+          Bureau of Investigative Journalism
+        %br
+        %a{href: "http://www.livingunderdrones.org/wp-content/uploads/2013/10/Stanford-NYU-Living-Under-Drones.pdf"}
+          Stanford-NYU Living Under Drones
+        
+
+
+%hr
+.row.center
+  .trends
+    %h1
+      General Data Trends
+.row.center
+  .trends
+    %h2
+      Drone strikes per country(%)
+.row.center
+  #{pie_chart(@countries, colors: ['rgb(157,194,211)', 'rgb(56,122,163)', 'rgb(100,158,185)'])}
+   
+%hr
+
+.row.center
+  .trends
+    %h2
+      Drone strikes per year
+    %br
+.row.center
+  #spy_chart_container
+    #spy_y_axis
+    #spy_chart
+  #spy_legend
+
+%hr
+
+.row.center
+  .trends
+    %h2
+      Deaths per year
+    %br
+.row.center
+  #death_chart_container
+    #death_y_axis
+    #death_chart
+  #death_legend
+
+%hr
+
+
+= javascript_include_tag 'top/yearly_strikes'
+= javascript_include_tag 'top/death_strikes'
