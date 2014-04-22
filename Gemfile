@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'mongo'
-source 'http://gemcutter.org'
+#source 'http://gemcutter.org'
 
 gem 'rails', '3.2.14'
 gem 'heroku'
