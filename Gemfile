@@ -3,6 +3,7 @@ require 'mongo'
 source 'http://gemcutter.org'
 
 gem 'rails', '3.2.14'
+gem 'heroku'
 gem 'thin'
 gem 'mongoid', '~> 3.1.6'
 gem 'mongoid3_metastamp', :git => "git://github.com/nvdk/mongoid3-metastamp.git"
