@@ -5,6 +5,8 @@ application.js: application-32f3036413bbe1b70f46dd59fbe72368.js
 application/index.js: application-32f3036413bbe1b70f46dd59fbe72368.js
 application.css: application-1661a770a87b5a22b620e276e57def20.css
 application/index.css: application-1661a770a87b5a22b620e276e57def20.css
+rickshaw_custom.css: rickshaw_custom-0b8474101633fc6365b442be8244c308.css
+rickshaw_custom/index.css: rickshaw_custom-0b8474101633fc6365b442be8244c308.css
 fontawesome-webfont.eot: fontawesome-webfont-e742c0f297e307a74bdf4ca3c19073a2.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-e742c0f297e307a74bdf4ca3c19073a2.eot
 fontawesome-webfont.svg: fontawesome-webfont-9169b7b7c593388d41dd3c339df5b86b.svg
